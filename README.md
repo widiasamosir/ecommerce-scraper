@@ -30,7 +30,7 @@ npm install
 ### 3. Set Up Environment Variables
 Create a `.env` file and add your **DeepSeek API key**:
 ```sh
-DEEPSEEK_API_KEY=your_openrouter_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 ## Usage
@@ -75,7 +75,4 @@ The scraper sends the extracted data to **DeepSeek LLM** for summarization.
   "summary": "Lower-priced items (₩1,457) have the highest sales (100K+). Mid-range products (₩20K-₩50K) show moderate sales, while high-end items (₩100K+) have lower sales. Steep discounts (2-3x price cuts) indicate a strategy to attract price-sensitive buyers."
 }
 ```
-
-## License
-MIT License
 
