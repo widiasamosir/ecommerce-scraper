@@ -57,13 +57,31 @@ const scrapeAI = async (url, searchQuery = '', currentPage = 1, limit = 20, summ
     let hasNextPage = true;
 
     while (hasNextPage) {
-        const cardsText = await page.$$eval('.aec-view', (cards) => {
+
+        const cardsText = await page.$$eval('.productContainer', (cards) => {
+            return cards.map(card => {
+                const price = card.querySelector('.AIC-PI-price-text')?.innerText.trim() || "";
+                const originalPrice = card.querySelector('.AIC-PI-ori-price-text')?.innerText.trim() || "";
+                const title = card.querySelector('.AIC-ATM-multiLine span')?.innerText.trim() || "";
+                const rating = card.querySelector('.AIC-OR-reviewInfoContainer span.AIC-OR-text')?.innerText.trim() || "";
+                const imageUrl = card.querySelector('.AIC-MI-img')?.src || "";
+                return {
+                    price: price,
+                    originalPrice: originalPrice,
+                    title: title,
+                    rating: rating,
+                    imageUrl: imageUrl,
+                }
+            });
+        });
+
+        const saleCard = await page.$$eval('.aec-view', (cards) => {
             return cards.map(card => {
                 const price = card.querySelector('.AIC-PI-price-text')?.innerText || "";
                 const originalPrice = card.querySelector('.AIC-PI-ori-price-text')?.innerText || "";
                 const title = card.querySelector('.AIC-ATM-multiLine')?.innerText || "";
                 const rating = card.querySelector('.AIC-OR-text')?.innerText || "";
-                const imageUrl = card.querySelector('.AIC-ATM-multiLine img')?.src || "";
+                const imageUrl = card.querySelector('.AIC-MI-container img')?.src || "";
                 return {
                     price: price,
                     originalPrice: originalPrice,
@@ -74,11 +92,7 @@ const scrapeAI = async (url, searchQuery = '', currentPage = 1, limit = 20, summ
             });
         });
         const detailsPage = await browser.newPage();
-        for (let item of cardsText) {
-            if (item.title !== '') {
-                results.push(item);
-            }
-        }
+        results.push(...[...cardsText, ...saleCard].filter(item => item.title !== ''));
 
         await detailsPage.close();
 
@@ -97,7 +111,7 @@ const scrapeAI = async (url, searchQuery = '', currentPage = 1, limit = 20, summ
 
     results.filter(card => card.title !== '');
     let items = results.slice(0, limit);
-    const summarize = await extractWithLLM(summarizeText, JSON.stringify(results));
+    const summarize = await extractWithLLM(summarizeText, JSON.stringify(items));
     return {
         totalRecords: results.length,
         currentPage: currentPage,
