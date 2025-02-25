@@ -30,7 +30,7 @@ npm install
 ### 3. Set Up Environment Variables
 Create a `.env` file and add your **DeepSeek API key**:
 ```sh
-DEEPSEEK_API_KEY=your_openrouter_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 ## Usage
