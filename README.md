@@ -28,7 +28,12 @@ npm install
 ```
 
 ### 3. Set Up Environment Variables
-Create a `.env` file and add your **DeepSeek API key**:
+1. Generate your own API KEY from:
+```sh
+https://openrouter.ai/deepseek/deepseek-r1-distill-llama-70b:free
+```
+
+2. Create a `.env` file and add your **DeepSeek API key**:
 ```sh
 OPENROUTER_API_KEY=your_openrouter_api_key
 ```
