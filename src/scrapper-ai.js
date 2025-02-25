@@ -15,28 +15,27 @@ const client = new OpenAI({
  * @returns {Promise<Object>} - The structured product details.
  */
 const extractWithLLM = async (summarizeText, text) => {
-    console.log('START SUMMARIZE PRODUCT DATA', text)
     const prompt = summarizeText? `
-    ${summarizeText}.
+    ${summarizeText}
     """${text}"""
     `: `
-    Identify key insights from the following product data. Avoid introductory remarks—provide a direct and structured analysis:
+    Analyze this product data:
     """${text}"""
     `;
 
     try {
         const response = await client.chat.completions.create({
             extra_headers: {
-                "HTTP-Referer": "https://your-site.com",
+                "HTTP-Referer": "http://localhost:3000",
                 "X-Title": "EcommerceScraper",
             },
-            model: "deepseek/deepseek-r1:free",
+            model: "deepseek/deepseek-r1-distill-llama-70b:free",
             messages: [{ role: "user", content: prompt }],
             temperature: 0,
             max_tokens: 500,
         });
-        const summarizationResult =  response.choices[0].message.content;
-        return summarizationResult.replace(/\n+/g, ' ').replace(/\s\s+/g, ' ').trim();
+        return response.choices[0].message.content;
+
     } catch (error) {
         console.error("Error from DeepSeek API:", error);
         return {};
