@@ -76,6 +76,3 @@ The scraper sends the extracted data to **DeepSeek LLM** for summarization.
 }
 ```
 
-## License
-MIT License
-
