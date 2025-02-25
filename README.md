@@ -54,6 +54,7 @@ http://localhost:3000/scrape?q=wireless+earbuds&page=1&limit=20
   "totalPages": 5,
   "nextPage": 2,
   "prevPage": null,
+ "summary": "Lower-priced items (₩1,457) have the highest sales (100K+). Mid-range products (₩20K-₩50K) show moderate sales, while high-end items (₩100K+) have lower sales. Steep discounts (2-3x price cuts) indicate a strategy to attract price-sensitive buyers."
   "data": [
     {
       "title": "Bluetooth Wireless Earbuds",
